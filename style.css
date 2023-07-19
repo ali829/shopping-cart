@@ -1,0 +1,142 @@
+:root {
+  --primary-: #ffbd5a;
+  --secondary-: #000000;
+  --gray-1: #e7ecf2;
+  --gray-2: #d5dde5;
+  --gray-3: #b8c1cc;
+  --red-1: #ff6262;
+  --white-1: #ffffff;
+  --green-1: #38c976;
+  --global-font: "Nanum Gothic", sans-serif;
+  --lg-rounded: 12px;
+  --md-rounded: 10px;
+  --sm-rounded: 8px;
+  --global-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--gray-2);
+  font-family: var(--global-font);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--white-1);
+  padding: 12px 0;
+  border-radius: var(--lg-rounded);
+  margin: 20px auto;
+  box-shadow: var(--global-shadow);
+  position: relative;
+}
+
+.product-item .product-image {
+  margin: 0 20px;
+}
+.product-item .product-image img {
+  height: 80px;
+  width: 80px;
+  border-radius: var(--md-rounded);
+  position: relative;
+}
+
+.product-item .product-detail {
+  margin: 0 20px;
+  height: 100%;
+}
+.product-item .product-detail .product-Title {
+  font-size: 20px;
+  margin: 5px 0;
+}
+.product-item .product-detail p:nth-child(1) {
+  font-weight: 600;
+}
+.product-item .product-detail .product-unit-price {
+  font-size: 16px;
+}
+.product-item .product-detail p:nth-child(2) {
+  color: var(--green-1);
+  font-weight: 300;
+}
+.product-item .product-detail .product-total-price {
+  font-size: 18px;
+}
+.product-item .product-detail p:nth-child(3) {
+  font-weight: 500;
+}
+
+.product-item .product-counter {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  margin: 0 20px;
+}
+
+.product-item .product-counter button {
+  margin: 0 5px;
+  appearance: none;
+  border: 0;
+  border-radius: var(--sm-rounded);
+  cursor: pointer;
+  padding: 6px;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease-out;
+  box-shadow: var(--global-shadow);
+}
+.product-item .product-counter button:hover {
+  box-shadow: none;
+  background-color: var(--primary-);
+}
+
+.product-item .btn-delete {
+  position: absolute;
+  padding: 4px;
+  top: -8%;
+  right: -3%;
+  appearance: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.4s ease-out;
+}
+.product-item .btn-delete:hover {
+  background-color: var(--red-1);
+  transform: scale(1.1);
+}
+.product-item .btn-delete svg {
+  height: 20px;
+}
+
+.Card-container .checkout-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: var(--sm-rounded);
+  background-color: var(--primary-);
+  box-shadow: var(--global-shadow);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.4s ease-out;
+}
+.Card-container .checkout-btn:hover {
+  box-shadow: none;
+  background-color: var(--gray-1);
+}
