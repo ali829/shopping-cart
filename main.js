@@ -15,12 +15,13 @@ let cart = [
   },
 ];
 const productsContainer = document.querySelector(".product-item-container");
+const productItems = document.querySelectorAll(".product-item");
 
 // rendering products from cart array
 const renderDom = (cart) => {
   let htmlElement = "";
-  cart.forEach((product) => {
-    htmlElement += `<div class="product-item">
+  cart.forEach((product, index) => {
+    htmlElement += `<div class="product-item" data-index-item="${index}">
     <div class="product-image">
       <img src="${product.imgSrc}" alt="" />
     </div>
@@ -30,11 +31,11 @@ const renderDom = (cart) => {
       <p>$ <span class="product-total-price">${product.priceTotal}</span></p>
     </div>
     <div class="product-counter">
-      <button class="minus-btn">-</button>
+      <button class="minus-btn" onClick="decrement(this)">-</button>
       <span class="qty">${product.qty}</span>
-      <button class="plus-btn">+</button>
+      <button class="plus-btn" onClick="increment(this)">+</button>
     </div>
-    <button class="btn-delete">
+    <button class="btn-delete" onClick="deleteProduct(this)">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
         <path
@@ -50,27 +51,51 @@ const renderDom = (cart) => {
 renderDom(cart);
 
 // incrementation  of qty function
-let increment = (index, products) => {
-  products[index].qty++;
-  updateProductTotalPrice(index, products[index].qty, products);
+let increment = (btn) => {
+  let itemIndex = btn.closest(".product-item").dataset.indexItem;
+  let qtyElem = btn.previousElementSibling;
+  let calcVal = parseInt(qtyElem.textContent);
+  calcVal += 1;
+  cart[itemIndex].qty = calcVal;
+  qtyElem.textContent = calcVal;
+  updateProductTotalPrice(itemIndex, calcVal);
+  cartTotalAmount();
 };
 
 // decrementation  of qty function
-let decrement = (index, products) => {
-  products[index].qty--;
-  updateProductTotalPrice(index, products[index].qty, products);
+let decrement = (btn) => {
+  let itemIndex = btn.closest(".product-item").dataset.indexItem;
+  if (cart[itemIndex].qty > 0) {
+    let qtyElem = btn.nextElementSibling;
+    let calcVal = parseInt(qtyElem.textContent);
+    calcVal -= 1;
+    cart[itemIndex].qty = calcVal;
+    qtyElem.textContent = calcVal;
+    updateProductTotalPrice(itemIndex, calcVal);
+    cartTotalAmount();
+  }
 };
 
-let updateProductTotalPrice = (index, qty, products) => {
-  products[index].priceTotal = products[index].priceUnitary * qty;
+let updateProductTotalPrice = (index, qty) => {
+  cart[index].priceTotal = cart[index].priceUnitary * qty;
+  document.querySelectorAll(".product-total-price")[index].textContent =
+    cart[index].priceTotal;
 };
 
-let cartTotalAmount = (cart) => {
+let cartTotalAmount = () => {
   let totalAmount = 0;
   cart.forEach((product) => {
     totalAmount += product.priceTotal;
   });
+  document.querySelector(".total-amount").textContent = totalAmount;
   return totalAmount;
 };
 
-// update dom
+const deleteProduct = (btn) => {
+  let itemIndex = btn.closest(".product-item").dataset.indexItem;
+  cart.splice(itemIndex, 1);
+  renderDom(cart);
+  cartTotalAmount();
+};
+
+document.querySelector(".total-amount").textContent = cartTotalAmount();
